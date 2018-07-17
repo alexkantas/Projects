@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="author" content="Alexandros Kantas">
+    <link rel="shortcut icon" type="image/png" href="img/favicon.jpeg" />
+    <title>Alex's Projects</title>
+    <!-- Semantic core CSS -->
+    <link href="public/dist/semantic.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="public/css/style.css" rel="stylesheet">
+</head>
+
+<body class="ui container">
+    <header class="ui top fixed menu">
+        <div class="item">
+            <h1>Projects</h1>
+        </div>
+    </header>
+    <main id="main">
+    <div id="loader" class="ui active centered inline loader" v-show="loader" v-text="msg"></div>
+        <ul class="projectList">
+            <template v-for="project in projects">
+                <li class="ui segment singleProject ">
+                    <h2 class="ui dividing header">{{ project.name }}</h2>
+                    <p class="sub header">{{ project.description }}</p>
+                    <div class="ui stackable two column grid">
+                        <div class="column">
+                            <img v-if="project.imageURL" class="ui big image" :src="project.imageURL" :alt="project.imageText">
+                            <template v-else>
+                                <div class="noImage">
+                                    <h1>{{ project.text }}</h1>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="column">
+                            <button v-on:click="toggleList(project)" class="technologiesBtn ui basic primary button">
+                                <i class="sidebar icon" v-bind:class="{'rotated' : project.listVisible }"></i> Show Technologies</button>
+                            <div v-bind:class="{'listVisible' : project.listVisible }" class="technologiesList ui relaxed divided list">
+                                <template v-for="technology in project.technologies">
+                                    <div class="item">
+                                        <i class="large middle aligned icon" v-bind:class="[technology.iconClass]"></i>
+                                        <div class="content">
+                                            <a class="header">{{ technology.name }}</a>
+                                            <div class="description">{{ technology.description }}</div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui divider"></div>
+                    <div class="bottomSegment">
+                        <div class="actionButtons">
+                            <a v-if="project.github" target="_blank" v-bind:href="project.github" class="ui primary button">
+                                <i class="github icon"></i> See on Github</a>
+                            <div v-else>&nbsp;</div>
+                            <a v-if="project.page" target="_blank" v-bind:href="project.page" class="ui positive button">
+                                <i class="chrome icon"></i> Visit Project </a>
+                        </div>
+                    </div>
+                </li>
+            </template>
+        </ul>
+
+        <!-- <ul class="coollist">
+            <apithano>and cool!</apithano>
+            <apithano>, for good!</apithano>
+            <apithano>and unique!!</apithano>
+        </ul> -->
+
+    </main>
+    <footer>
+
+    </footer>
+    <!-- Vue JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+        var projectsURL = "/public/data/projects.json?1";
+    </script>
+    <script src="public/js/dist/promise.min.js"></script>
+    <script src="public/js/dist/fetch.js"></script>
+    <script src="public/js/dist/index.1.js"></script>
+</body>
+
+</html>
